@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "339685115927",
+    "firebase_url": "https://chicken-6629b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "chicken-6629b",
+    "storage_bucket": "chicken-6629b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339685115927:android:143ff198287d973b11b452",
+        "android_client_info": {
+          "package_name": "com.example.chicken"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ4NcZwZ8vC186O-wS3gX_CfFmbMGzWZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
