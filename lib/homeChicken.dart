@@ -42,7 +42,7 @@ class _HomeChickenState extends State<HomeChicken> {
                   style: Theme.of(context).textTheme.labelLarge,
                 );
               } else {
-                return Text("Loading...");
+                return const Text("Loading...");
               }
             },
           ),
@@ -57,12 +57,11 @@ class _HomeChickenState extends State<HomeChicken> {
               }
 
               if (snapshot.hasData) {
-
                 return Text(
-                  "Fan Status: ${stat? "Active" : "Inactive"}",
+                  "Fan Status: ${stat ? "Active" : "Inactive"}",
                 );
               } else {
-                return Text("Loading...");
+                return const Text("Loading...");
               }
             },
           ),
@@ -75,24 +74,23 @@ class _HomeChickenState extends State<HomeChicken> {
               }
 
               if (snapshot.hasData) {
-
                 return Text(
-                  "Light Bulb Status: ${stat? "Active" : "Inactive"}",
+                  "Light Bulb Status: ${stat ? "Active" : "Inactive"}",
                 );
               } else {
-                return Text("Loading...");
+                return const Text("Loading...");
               }
             },
           ),
-         // Text("Fan Status: ${isFanOn ? "Active" : "Inactive"}"),
-         // Text("Light Bulb Status: ${isBulbOn ? "Active" : "Inactive"}"),
+          // Text("Fan Status: ${isFanOn ? "Active" : "Inactive"}"),
+          // Text("Light Bulb Status: ${isBulbOn ? "Active" : "Inactive"}"),
           //history
           ElevatedButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => historyRecords()));
+                    MaterialPageRoute(builder: (context) => HistoryRecords()));
               },
-              child: Text("See Records"))
+              child: const Text("See Records"))
         ],
       ),
     ));
