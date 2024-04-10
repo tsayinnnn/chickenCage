@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:chicken/historyPage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeChicken extends StatefulWidget {
   HomeChicken({super.key});
@@ -14,10 +15,10 @@ class HomeChicken extends StatefulWidget {
 class _HomeChickenState extends State<HomeChicken> {
   @override
   Widget build(BuildContext context) {
-    final Reff = FirebaseDatabase.instance.ref();
-    DatabaseReference isFanOn = Reff.child('data/fan');
-    DatabaseReference isBulbOn = Reff.child('data/light');
-    DatabaseReference temperatura = Reff.child('data/ambience');
+    final ref = FirebaseDatabase.instance.ref();
+    DatabaseReference isFanOn = ref.child('data/fan');
+    DatabaseReference isBulbOn = ref.child('data/light');
+    DatabaseReference temperatura = ref.child('data/ambience');
 
     return Scaffold(
         body: Center(
@@ -32,8 +33,11 @@ class _HomeChickenState extends State<HomeChicken> {
           StreamBuilder(
             stream: temperatura.onValue,
             builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text("ERROR: ${snapshot.error}");
+              if (snapshot.hasError || snapshot.data == null) {
+                return const Skeletonizer(
+                  enabled: true,
+                  child: Text("Loading..."),
+                );
               }
 
               if (snapshot.hasData) {
@@ -42,7 +46,10 @@ class _HomeChickenState extends State<HomeChicken> {
                   style: Theme.of(context).textTheme.labelLarge,
                 );
               } else {
-                return Text("Loading...");
+                return const Skeletonizer(
+                  enabled: true,
+                  child: Text("Loading..."),
+                );
               }
             },
           ),
@@ -51,48 +58,61 @@ class _HomeChickenState extends State<HomeChicken> {
           StreamBuilder(
             stream: isFanOn.onValue,
             builder: (context, snapshot) {
-              bool stat = snapshot.data!.snapshot.value as bool;
-              if (snapshot.hasError) {
-                return Text("ERROR: ${snapshot.error}");
+              if (snapshot.hasError || snapshot.data == null) {
+                return const Skeletonizer(
+                  enabled: true,
+                  child: Text("Loading..."),
+                );
               }
 
+              bool stat = snapshot.data!.snapshot.value as bool;
               if (snapshot.hasData) {
-
                 return Text(
-                  "Fan Status: ${stat? "Active" : "Inactive"}",
+                  "Fan Status: ${stat ? "Active" : "Inactive"}",
                 );
               } else {
-                return Text("Loading...");
+                return const Skeletonizer(
+                  enabled: true,
+                  child: Text("Loading..."),
+                );
               }
             },
           ),
           StreamBuilder(
             stream: isBulbOn.onValue,
             builder: (context, snapshot) {
-              bool stat = snapshot.data!.snapshot.value as bool;
-              if (snapshot.hasError) {
-                return Text("ERROR: ${snapshot.error}");
+              if (snapshot.hasError || snapshot.data == null) {
+                return const Skeletonizer(
+                  enabled: true,
+                  child: Text("Loading..."),
+                );
               }
 
+              bool stat = snapshot.data!.snapshot.value as bool;
               if (snapshot.hasData) {
-
                 return Text(
-                  "Light Bulb Status: ${stat? "Active" : "Inactive"}",
+                  "Light Bulb Status: ${stat ? "Active" : "Inactive"}",
                 );
               } else {
-                return Text("Loading...");
+                return const Skeletonizer(
+                  enabled: true,
+                  child: Text("Loading..."),
+                );
               }
             },
           ),
-         // Text("Fan Status: ${isFanOn ? "Active" : "Inactive"}"),
-         // Text("Light Bulb Status: ${isBulbOn ? "Active" : "Inactive"}"),
+
           //history
           ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => historyRecords()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HistoryRecords(),
+                  ),
+                );
               },
-              child: Text("See Records"))
+              child: const Text("See Records"))
         ],
       ),
     ));
